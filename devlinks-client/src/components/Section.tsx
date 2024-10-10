@@ -7,7 +7,7 @@ type PropsType = {
 
 const Section = ({ children, className }: PropsType) => {
     return (
-        <div className={cn('p-5 bg-white rounded-lg', className)}>
+        <div className={cn('p-4 bg-white rounded-lg', className)}>
             {children}
         </div>
     );

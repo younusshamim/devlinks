@@ -18,11 +18,11 @@ const Skeleton: React.FC<SkeletonProps> = ({
     const renderSkeleton = () => {
         switch (type) {
             case 'rounded':
-                return <div className={cn(baseClasses, "h-24 w-24 rounded-full", className)} />;
+                return <div className={cn(baseClasses, "h-[90px] w-[90px] rounded-full", className)} />;
             case 'rectangle':
                 return <div className={cn(baseClasses, "h-24 w-24", className)} />;
             case 'button':
-                return <div className={cn(baseClasses, "h-10 w-full", className)} />;
+                return <div className={cn(baseClasses, "h-9 w-full", className)} />;
             case 'input':
                 return (
                     <div className="space-y-2">

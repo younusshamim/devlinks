@@ -5,10 +5,10 @@ import { Outlet } from "react-router-dom";
 
 const DashboardLayout = () => {
     return (
-        <div className="px-4 pt-4 space-y-4">
+        <div className="p-4 space-y-4">
             <DashboardHeader />
 
-            <div className="flex space-x-4 ">
+            <div className="flex space-x-4 h-[calc(100vh-116px)]">
                 <Section className="w-[45%]">
                     <PhoneMockup />
                 </Section>

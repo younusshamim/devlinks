@@ -28,6 +28,7 @@ export default function DashboardHeader() {
             onClick={() => navigate(button.link)}
             variant={pathname === button.link ? "secondary" : 'ghost'}
             iconBefore={button.icon}
+            size='sm'
           >
             {button.title}
           </Button>
@@ -35,6 +36,7 @@ export default function DashboardHeader() {
       </div>
 
       <Button
+        size='sm'
         onClick={() => navigate(PageRoutes.preview)} variant='outline'>
         Preview
       </Button>
