@@ -15,7 +15,7 @@ const ProfileDetails = () => {
     };
 
     return (
-        <DashboardForm
+        <DashboardForm<ProfileDetailsType>
             title="Profile Details"
             subTitle="Add your details to create a personal touch to your profile."
             methods={methods}
