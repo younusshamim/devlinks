@@ -109,7 +109,7 @@ const customSyles = (height?: string) => {
       ...provided,
       zIndex: 99999,
     }),
-    control: (provided: CSSObjectWithLabel): CSSObjectWithLabel => ({
+    control: (provided: CSSObjectWithLabel, state: { isFocused: boolean }): CSSObjectWithLabel => ({
       ...provided,
       background: 'transparent',
       height: height || '40px',
@@ -117,9 +117,9 @@ const customSyles = (height?: string) => {
       maxHeight: height || '40px',
       fontSize: '14px',
       borderRadius: '5px',
-      border: `2px solid #e3e3e3`,
+      border: `1px solid ${state.isFocused ? '#633bfe' : '#cfcccc'}`,
       '&:hover': {
-        borderColor: `#cfcccc`,
+        borderColor: `${state.isFocused ? '#633bfe' : '#cfcccc'}`,
       },
     }),
     valueContainer: (provided: CSSObjectWithLabel): CSSObjectWithLabel => ({

@@ -16,7 +16,6 @@ const CustomizeLinks = () => {
     const platformsOptions = PlatformsData.map(platform => {
         return { label: platform.name, value: platform.name, Icon: platform.Icon }
     })
-
     const methods = useForm<FormData>({
         resolver: zodResolver(customizeLinksArraySchema),
         defaultValues: { platforms: [platformInitialData] },
@@ -32,7 +31,7 @@ const CustomizeLinks = () => {
     }
 
     return (
-        <div className="h-full space-y-5 overflow-hidden">
+        <div className="h-full space-y-5">
             <HeadingGroup
                 title="Customize your links"
                 subtitle="Add/edit/remove links below and then share all your profiles with the world!"
