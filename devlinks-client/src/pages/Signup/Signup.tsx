@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 const Signup = () => {
     return (
         <div className="flex justify-center items-center min-h-screen w-screen">
-            <Section className='w-[400px] p-10 m-10 space-y-4 flex flex-col items-center'>
+            <Section className='w-full sm:w-[400px] sm:m-10 p-10 space-y-4 flex flex-col items-center'>
                 <Logo className="scale-125 mb-3" />
 
                 <Input label="First name" placeholder="Write first name" />
@@ -18,7 +18,7 @@ const Signup = () => {
 
                 <Button className="w-full">Create new account</Button>
 
-                <div className="flex justify-center gap-2 text-sm">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-sm">
                     <p>Already have an account?</p>
                     <Link to={PageRoutes.login} className="text-primary underline font-semibold">Login</Link>
                 </div>

@@ -1,4 +1,4 @@
-import HeadingGroup from "@/components/heading-group";
+import HeadingGroup from "@/components/HeadingGroup";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
