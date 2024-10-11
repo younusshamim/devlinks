@@ -1,11 +1,10 @@
 import HeadingGroup from "@/components/heading-group";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import MySelect from "@/components/ui/my-select";
+import ReactSelect from "@/components/ui/react-select";
 import PlatformsData from "@/data/platforms.data";
 import { customizeLinksArraySchema } from "@/validators/customize-link.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useRef } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { FiLink } from "react-icons/fi";
 import { MdDragHandle } from "react-icons/md";
@@ -26,14 +25,6 @@ const CustomizeLinks = () => {
         control,
         name: "platforms",
     });
-
-    const scrollContainerRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        if (scrollContainerRef.current) {
-            scrollContainerRef.current.scrollTop = scrollContainerRef.current.scrollHeight;
-        }
-    }, [fields]);
 
     const onSave = (data: unknown) => {
         console.log(data);
@@ -67,9 +58,11 @@ const CustomizeLinks = () => {
                             </div>
 
                             <div className="flex flex-col gap-5">
-                                <MySelect
-                                    {...register(`platforms.${index}.name`)}
-                                    label="Platform" placeholder="Select Platform" options={platformsOptions}
+                                <ReactSelect
+                                    label="Platform" placeholder="Select Platform"
+                                    name={`platforms.${index}.name`}
+                                    control={control}
+                                    options={platformsOptions}
                                     error={errors?.platforms?.[index]?.name?.message}
                                 />
                                 <Input
