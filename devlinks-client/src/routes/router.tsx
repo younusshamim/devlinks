@@ -1,7 +1,9 @@
 import DashboardLayout from "@/layouts/DashboardLayout";
 import CustomizeLinks from "@/pages/CustomizeLinks/CustomizeLinks";
+import Login from "@/pages/Login/Login";
 import Preview from "@/pages/Preview/Preview";
 import ProfileDetails from "@/pages/ProfileDetails/ProfileDetails";
+import Signup from "@/pages/Signup/Signup";
 import { createBrowserRouter } from "react-router-dom";
 import PageRoutes from "./page-routes";
 
@@ -20,11 +22,11 @@ const Router = createBrowserRouter([
   },
   {
     path: PageRoutes.login,
-    element: null,
+    element: <Login />,
   },
   {
     path: PageRoutes.signup,
-    element: null,
+    element: <Signup />,
   },
 ]);
 

@@ -12,7 +12,7 @@ export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElem
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, inputClassName, type, label, error, iconBefore, iconAfter, ...props }, ref) => {
     return (
-      <div className={cn("flex flex-col gap-1", className)}>
+      <div className={cn("flex flex-col gap-1 w-full", className)}>
         {label && <label className="text-sm" htmlFor={props.name}>{label}</label>}
 
         <div className="relative flex items-center">
