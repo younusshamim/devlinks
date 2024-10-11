@@ -1,17 +1,22 @@
 import DashboardForm from "@/components/Forms/DashboardForm/DashboardForm";
+import { useProfile } from '@/context/ProfileContext';
 import { ProfileDetailsType, profileDetailsSchema } from "@/validators/profile-details.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import React from 'react';
 import { useForm } from "react-hook-form";
 import ProfileFormFields from "./ProfileFormFields";
 
+const ProfileDetails: React.FC = () => {
+    const { profileDetails, updateProfileDetails, } = useProfile();
 
-const ProfileDetails = () => {
     const methods = useForm<ProfileDetailsType>({
         resolver: zodResolver(profileDetailsSchema),
+        defaultValues: profileDetails,
     });
 
-    const onSave = (data: ProfileDetailsType) => {
-        console.log(data);
+    const onSave = async (data: ProfileDetailsType) => {
+        updateProfileDetails(data);
+        // await saveData();
     };
 
     return (

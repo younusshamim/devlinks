@@ -15,7 +15,7 @@ interface FormData {
     platforms: PlatformType[];
 }
 
-const CustomizeLinks = () => {
+const CustomizeLinksForm = () => {
     const { customizeLinks, updateCustomizeLinks, } = useProfile();
 
     const platformsOptions = useMemo(() => PlatformsData.map(platform => ({
@@ -24,7 +24,7 @@ const CustomizeLinks = () => {
 
     const methods = useForm<FormData>({
         resolver: zodResolver(customizeLinksArraySchema),
-        defaultValues: { platforms: customizeLinks.length > 0 ? customizeLinks : [{ name: "", link: "", displayOrder: 1 }] },
+        defaultValues: { platforms: customizeLinks ? customizeLinks : [{ name: "", link: "", displayOrder: 1 }] },
     });
 
     const { fields, append, remove, move } = useFieldArray({
@@ -92,4 +92,4 @@ const CustomizeLinks = () => {
     );
 };
 
-export default CustomizeLinks;
+export default CustomizeLinksForm;

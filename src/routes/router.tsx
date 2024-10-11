@@ -6,11 +6,12 @@ import ProfileDetails from "@/pages/ProfileDetails/ProfileDetails";
 import Signup from "@/pages/Signup/Signup";
 import { createBrowserRouter } from "react-router-dom";
 import PageRoutes from "../config/page-routes";
+import PrivateRoute from "./PrivateRoute";
 
 const Router = createBrowserRouter([
   {
     path: "/",
-    element: <DashboardLayout />,
+    element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
     children: [
       { path: PageRoutes.customizeLinks, element: <CustomizeLinks /> },
       { path: PageRoutes.profileDetails, element: <ProfileDetails /> },
