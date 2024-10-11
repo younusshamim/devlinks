@@ -1,9 +1,10 @@
 import { z } from "zod";
-import { requiredString, validateUrl } from "./common-rules";
+import { numberOptional, requiredString, validateUrl } from "./common-rules";
 
 export const platformSchema = z.object({
   name: requiredString,
   link: validateUrl,
+  displayOrder: numberOptional,
 });
 
 export const customizeLinksArraySchema = z.object({

@@ -13,6 +13,8 @@ export const requiredString = z
 
 export const stringOptional = z.string().optional();
 
+export const numberOptional = z.number().optional();
+
 export const boolean = z.boolean();
 
 export const validateEmail = z

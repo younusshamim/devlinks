@@ -33,7 +33,7 @@ const CustomizeFormFields = ({
                         </span>
                     </div>
 
-                    <div className="flex flex-col gap-5">
+                    <div className="flex flex-col gap-3">
                         <ReactSelect
                             label="Platform" placeholder="Select Platform"
                             name={`platforms.${index}.name`}

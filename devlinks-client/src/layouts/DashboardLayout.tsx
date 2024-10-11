@@ -9,11 +9,11 @@ const DashboardLayout = () => {
             <DashboardHeader />
 
             <div className="flex space-x-4">
-                <Section className="w-[45%]">
+                <Section className="w-[45%] hidden md:block">
                     <PhoneMockup />
                 </Section>
 
-                <Section className="w-[55%] px-0 py-7" ><Outlet /></Section>
+                <Section className="w-full md:w-[55%] px-0 py-7" ><Outlet /></Section>
             </div>
         </div>
     );
