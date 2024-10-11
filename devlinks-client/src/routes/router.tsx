@@ -5,7 +5,7 @@ import Preview from "@/pages/Preview/Preview";
 import ProfileDetails from "@/pages/ProfileDetails/ProfileDetails";
 import Signup from "@/pages/Signup/Signup";
 import { createBrowserRouter } from "react-router-dom";
-import PageRoutes from "./page-routes";
+import PageRoutes from "../config/page-routes";
 
 const Router = createBrowserRouter([
   {

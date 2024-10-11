@@ -1,7 +1,7 @@
 import Logo from "@/components/Logo/Logo";
 import Section from "@/components/Section";
 import { Button } from "@/components/ui/button";
-import PageRoutes from "@/routes/page-routes";
+import PageRoutes from "@/config/page-routes";
 import { FieldValues, FormProvider, SubmitHandler, UseFormReturn } from "react-hook-form";
 import { Link } from "react-router-dom";
 

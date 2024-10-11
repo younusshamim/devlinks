@@ -25,7 +25,7 @@ const DashboardForm = <T extends FieldValues>({
                 <div className="px-6 pb-10 space-y-6">
                     <FormHeading title={title} subtitle={subTitle} />
                     {afterHeading}
-                    <div className="space-y-5 max-h-[470px] min-h-[470px] overflow-y-auto">
+                    <div className="space-y-5 sm:max-h-[470px] sm:min-h-[470px] overflow-y-auto">
                         {formFields}
                     </div>
                 </div>

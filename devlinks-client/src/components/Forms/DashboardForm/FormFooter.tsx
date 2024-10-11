@@ -7,7 +7,7 @@ const FormFooter = () => {
 
             <div className="px-6 md:text-end">
                 <div className="md:inline-flex">
-                    <Button type="submit" >
+                    <Button type="submit" className="w-full sm:w-fit">
                         Save
                     </Button>
                 </div>
