@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils';
 import { OptionType } from '@/types/option.type';
 import { ComponentProps } from 'react';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
-import Select, { CSSObjectWithLabel } from 'react-select';
+import Select, { CSSObjectWithLabel, GroupBase, OptionProps, SingleValueProps } from 'react-select';
 
 type SelectProps = ComponentProps<typeof Select>;
 
@@ -13,11 +13,36 @@ interface PropsTypes<T extends FieldValues> extends SelectProps {
   name: Path<T>;
   options: OptionType[];
   value?: OptionType;
-  onChange?: (newValue: unknown,) => void;
+  onChange?: (newValue: unknown) => void;
   height?: string;
   error?: string;
   isMulti?: boolean;
 }
+
+// Define a generic wrapper for CustomOption to match the react-select expectations
+const CustomOptionWrapper = (props: OptionProps<unknown, boolean, GroupBase<unknown>>) => {
+  const { data, children, innerRef, innerProps } = props as OptionProps<OptionType, boolean, GroupBase<OptionType>>;
+  const Icon = data.Icon;
+
+  return (
+    <div ref={innerRef} {...innerProps} className="flex items-center space-x-2 p-2">
+      {Icon && <Icon className="w-4 h-4" />}
+      <span>{children}</span>
+    </div>
+  );
+};
+
+// Define a generic wrapper for CustomSingleValue to match the react-select expectations
+const CustomSingleValueWrapper = (props: SingleValueProps<unknown, boolean, GroupBase<unknown>>) => {
+  const { data } = props as SingleValueProps<OptionType, boolean, GroupBase<OptionType>>;
+  const Icon = data.Icon;
+  return (
+    <div className="flex items-center">
+      {Icon && <Icon className="w-4 h-4 mr-2" />}
+      <span>{data.label}</span>
+    </div>
+  );
+};
 
 function ReactSelect<T extends FieldValues>({
   control,
@@ -39,7 +64,6 @@ function ReactSelect<T extends FieldValues>({
     }
   }
 
-
   return (
     <div className={cn('flex flex-col', className)}>
       <label className="font-[500] mb-[5px]">{label}</label>
@@ -55,6 +79,10 @@ function ReactSelect<T extends FieldValues>({
               })}
               styles={customSyles(height)}
               options={options}
+              components={{
+                Option: CustomOptionWrapper,
+                SingleValue: CustomSingleValueWrapper
+              }}
               value={
                 isMulti
                   ? options.filter(option => (value as string[])?.includes(option.value))
@@ -75,7 +103,7 @@ function ReactSelect<T extends FieldValues>({
 
 export default ReactSelect;
 
-const customSyles = (height?: string,) => {
+const customSyles = (height?: string) => {
   return {
     menu: (provided: CSSObjectWithLabel): CSSObjectWithLabel => ({
       ...provided,
@@ -84,14 +112,10 @@ const customSyles = (height?: string,) => {
     control: (provided: CSSObjectWithLabel): CSSObjectWithLabel => ({
       ...provided,
       background: 'transparent',
-      minHeight: height,
-      maxHeight: height,
-      // minWidth: '215px',
-      // width: isLargerThanSm ? '215px' : '100%',
-      // overflowY: 'scroll',
+      height: height || '40px',
+      minHeight: height || '40px',
+      maxHeight: height || '40px',
       fontSize: '14px',
-      // marginLeft: 'auto',
-      // marginRight: '4px',
       borderRadius: '5px',
       border: `2px solid #e3e3e3`,
       '&:hover': {
@@ -100,11 +124,28 @@ const customSyles = (height?: string,) => {
     }),
     valueContainer: (provided: CSSObjectWithLabel): CSSObjectWithLabel => ({
       ...provided,
-      paddingBottom: '5px',
+      display: 'flex',
+      alignItems: 'center',
+      padding: '2px 8px',
+      minHeight: height || '38px',
+      overflow: 'hidden',
     }),
     singleValue: (provided: CSSObjectWithLabel): CSSObjectWithLabel => ({
       ...provided,
-      color: `#666666`,
+      margin: 0,
+      padding: 0,
+      display: 'flex',
+      alignItems: 'center',
     }),
-  }
-}
+    indicatorsContainer: (provided: CSSObjectWithLabel): CSSObjectWithLabel => ({
+      ...provided,
+      height: '100%',
+    }),
+    placeholder: (provided: CSSObjectWithLabel): CSSObjectWithLabel => ({
+      ...provided,
+      margin: 0,
+      padding: 0,
+      lineHeight: 1,
+    }),
+  };
+};

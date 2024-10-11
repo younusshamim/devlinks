@@ -10,6 +10,7 @@ import { FiLink } from "react-icons/fi";
 import { MdDragHandle } from "react-icons/md";
 
 type FormData = { platforms: { name: string; link: string }[] };
+const platformInitialData = { name: "", link: "" }
 
 const CustomizeLinks = () => {
     const platformsOptions = PlatformsData.map(platform => {
@@ -18,7 +19,7 @@ const CustomizeLinks = () => {
 
     const methods = useForm<FormData>({
         resolver: zodResolver(customizeLinksArraySchema),
-        defaultValues: { platforms: [{ name: "", link: "" }] },
+        defaultValues: { platforms: [platformInitialData] },
     });
     const { handleSubmit, register, control, formState: { errors } } = methods;
     const { fields, append, remove } = useFieldArray({
@@ -39,7 +40,7 @@ const CustomizeLinks = () => {
             />
 
             <div className="px-6">
-                <Button variant="outline" className="w-full" onClick={() => append({ name: "", link: "" })}>
+                <Button variant="outline" className="w-full" onClick={() => append(platformInitialData)}>
                     + Add new link
                 </Button>
             </div>
