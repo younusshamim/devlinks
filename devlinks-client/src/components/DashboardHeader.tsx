@@ -4,9 +4,9 @@ import PageRoutes from "@/routes/page-routes";
 import { CgProfile } from "react-icons/cg";
 import { RiLinksLine } from "react-icons/ri";
 import { useLocation, useNavigate } from "react-router-dom";
-import Logo from "../Logo/Logo";
-import Section from "../Section";
-import { Button } from "../ui/button";
+import Logo from "./Logo/Logo";
+import Section from "./Section";
+import { Button } from "./ui/button";
 
 const tabsButtons = [
   { title: 'Links', icon: <RiLinksLine />, link: PageRoutes.customizeLinks },
@@ -18,7 +18,7 @@ export default function DashboardHeader() {
   const { pathname } = useLocation();
 
   return (
-    <Section className="flex items-center justify-between py-4">
+    <Section className="flex items-center justify-between ">
       <Logo />
 
       <div className="space-x-5">
@@ -28,7 +28,6 @@ export default function DashboardHeader() {
             onClick={() => navigate(button.link)}
             variant={pathname === button.link ? "secondary" : 'ghost'}
             iconBefore={button.icon}
-            size='sm'
           >
             {button.title}
           </Button>
@@ -36,7 +35,6 @@ export default function DashboardHeader() {
       </div>
 
       <Button
-        size='sm'
         onClick={() => navigate(PageRoutes.preview)} variant='outline'>
         Preview
       </Button>

@@ -22,7 +22,7 @@ const Skeleton: React.FC<SkeletonProps> = ({
             case 'rectangle':
                 return <div className={cn(baseClasses, "h-24 w-24", className)} />;
             case 'button':
-                return <div className={cn(baseClasses, "h-9 w-full", className)} />;
+                return <div className={cn(baseClasses, "h-10 w-full", className)} />;
             case 'input':
                 return (
                     <div className="space-y-2">
