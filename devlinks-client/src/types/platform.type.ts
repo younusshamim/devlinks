@@ -6,8 +6,3 @@ export type PlatformDataType = {
   background?: string;
   foreground?: string;
 };
-
-export type platformLinkType = {
-  name: string;
-  link: string;
-};
