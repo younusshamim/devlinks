@@ -9,6 +9,5 @@ export type PlatformDataType = {
 
 export type platformLinkType = {
   name: string;
-  url: string;
-  Icon: ElementType;
+  link: string;
 };

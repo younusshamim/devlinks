@@ -11,7 +11,7 @@ export const requiredString = z
   .string({ message: messages.fieldRequired })
   .min(1, { message: messages.fieldRequired });
 
-export const stringOptional = z.nullable(z.string());
+export const stringOptional = z.string().optional();
 
 export const boolean = z.boolean();
 

@@ -1,62 +1,27 @@
-import HeadingGroup from "@/components/HeadingGroup";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import DashboardForm from "@/components/Forms/DashboardForm/DashboardForm";
+import { ProfileDetailsType, profileDetailsSchema } from "@/validators/profile-details.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import UploadImage from "./UploadImage";
+import ProfileFormFields from "./ProfileFormFields";
 
-type FormData = { pricture: string; firstName: string, lastName: string, email: string };
 
 const ProfileDetails = () => {
-    const methods = useForm<FormData>({
-        // resolver: zodResolver(customizeLinksArraySchema),
-        // defaultValues: null,
+    const methods = useForm<ProfileDetailsType>({
+        resolver: zodResolver(profileDetailsSchema),
     });
-    const { handleSubmit, register, } = methods;
 
-    const onSave = (data: unknown) => {
+    const onSave = (data: ProfileDetailsType) => {
         console.log(data);
-    }
+    };
 
     return (
-        <div className="h-full space-y-5">
-            <HeadingGroup
-                title="Profile Details"
-                subtitle="Add your details to create a personal touch to your profile."
-                className="px-6"
-            />
-
-            <form onSubmit={handleSubmit(onSave)}>
-                <div className="px-6 pb-6 space-y-6">
-                    <UploadImage />
-                    <Input
-                        {...register(`firstName`)}
-                        label="First Name*"
-                        placeholder="Write first name"
-                    />
-                    <Input
-                        {...register(`lastName`)}
-                        label="Last Name*"
-                        placeholder="Write last name"
-                    />
-                    <Input
-                        {...register(`email`)}
-                        label="Email"
-                        placeholder="Write your email"
-                    />
-                </div>
-
-
-                <hr className="mb-5 border-2 border-gray-100" />
-
-                <div className="px-6 md:text-end">
-                    <div className="md:inline-flex">
-                        <Button type="submit" >
-                            Save
-                        </Button>
-                    </div>
-                </div>
-            </form>
-        </div>
+        <DashboardForm
+            title="Profile Details"
+            subTitle="Add your details to create a personal touch to your profile."
+            methods={methods}
+            onSave={onSave}
+            formFields={<ProfileFormFields methods={methods} />}
+        />
     );
 };
 

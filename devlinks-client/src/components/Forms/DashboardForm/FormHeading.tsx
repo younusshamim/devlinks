@@ -6,7 +6,7 @@ type PropsType = {
   className?: string;
 }
 
-const HeadingGroup = ({ title, subtitle, className }: PropsType) => {
+const FormHeading = ({ title, subtitle, className }: PropsType) => {
   return (
     <div className={cn("text-start flex flex-col gap-2", className)}>
       <h1 className={`text-neutral-dark-grey text-2xl font-bold md:text-3xl`}>{title}</h1>
@@ -15,4 +15,4 @@ const HeadingGroup = ({ title, subtitle, className }: PropsType) => {
   );
 }
 
-export default HeadingGroup;
+export default FormHeading;

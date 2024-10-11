@@ -2,6 +2,9 @@ import Section from "@/components/Section";
 import { IoImageOutline } from "react-icons/io5";
 
 export default function UploadImage() {
+  // const formContext = useFormContext();
+  // const { register, setValue, getValues, formState: { errors } } = formContext;
+
   const imageUrl = null;
 
   const handleImageChange = () => {
