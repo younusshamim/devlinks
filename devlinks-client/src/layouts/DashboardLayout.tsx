@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 
 const DashboardLayout = () => {
     return (
-        <div className="p-4 space-y-4 ">
+        <div className="p-4 space-y-4">
             <DashboardHeader />
 
             <div className="flex space-x-4">
