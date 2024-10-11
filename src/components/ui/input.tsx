@@ -32,15 +32,15 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     },
     ref
   ) => {
-    const labelClass = layout === "row" ? `w-${labelWidth}` : "w-full";
-    const inputClass = layout === "row" ? `w-${inputWidth}` : "w-full";
+    const labelStyle: React.CSSProperties = { width: layout === "row" ? labelWidth : '100%' };
+    const inputStyle: React.CSSProperties = { width: layout === "row" ? inputWidth : '100%', };
 
     return (
       <div className={cn("w-full", className)}>
         <div className={cn("flex gap-1", layout === "row" ? "flex-row items-center justify-between" : "flex-col")}>
-          {label && <label className={cn("text-sm", labelClass)} htmlFor={props.name}>{label}</label>}
+          {label && <label style={labelStyle} className={cn("text-sm")} htmlFor={props.name}>{label}</label>}
 
-          <div className={cn("relative flex items-center", inputWrapClassName, inputClass)}>
+          <div style={inputStyle} className={cn("relative flex items-center", inputWrapClassName)}>
             {iconBefore && (
               <div className="absolute left-3 top-1/2 -translate-y-1/2">
                 {iconBefore}

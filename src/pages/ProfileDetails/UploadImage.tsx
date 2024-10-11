@@ -1,10 +1,11 @@
 import Section from "@/components/Section";
+import { showErrorToast, showSuccessToast } from "@/config/toast-options";
 import React, { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { IoImageOutline } from "react-icons/io5";
 
-const IMAGEBB_API_KEY = '7368137052956468304b9e8bf25eac76';
+const IMAGEBB_API_KEY = import.meta.env.VITE_IMAGEBB_API_KEY;
 const MAX_FILE_SIZE = 1024 * 1024;
 const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png'];
 
@@ -59,9 +60,9 @@ export default function UploadImage() {
 
     if (uploadedImageUrl) {
       setValue('picture', uploadedImageUrl);
-      toast.success('Image uploaded successfully!');
+      showSuccessToast('Image uploaded successfully!');
     } else {
-      toast.error('Failed to upload image. Please try again.');
+      showErrorToast('Failed to upload image. Please try again.');
     }
   };
 
