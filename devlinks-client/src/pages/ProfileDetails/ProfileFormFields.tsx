@@ -25,8 +25,7 @@ const ProfileFormFields = ({ methods }: ProfileFormFieldsProps) => {
                     label="First Name*"
                     placeholder="Write first name"
                     error={errors.firstName?.message}
-                    layout={smDevice ? "row" : "column"}
-
+                    layout={'row'}
                 />
                 <Input
                     {...register("lastName")}

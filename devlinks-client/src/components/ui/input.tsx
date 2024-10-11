@@ -26,8 +26,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       iconBefore,
       iconAfter,
       layout = "column",
-      labelWidth = "1/3",
-      inputWidth = "2/3",
+      labelWidth = "[30%]",
+      inputWidth = "[70%]",
       ...props
     },
     ref
@@ -38,9 +38,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className={cn("w-full", className)}>
         <div className={cn("flex gap-1", layout === "row" ? "flex-row items-center justify-between" : "flex-col")}>
-          {label && <label className={cn("text-sm w-full", labelClass)} htmlFor={props.name}>{label}</label>}
+          {label && <label className={cn("text-sm", labelClass)} htmlFor={props.name}>{label}</label>}
 
-          <div className={cn("relative flex items-center w-full", inputWrapClassName, inputClass)}>
+          <div className={cn("relative flex items-center", inputWrapClassName, inputClass)}>
             {iconBefore && (
               <div className="absolute left-3 top-1/2 -translate-y-1/2">
                 {iconBefore}
