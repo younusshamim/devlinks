@@ -5,6 +5,7 @@ import { useFormContext } from 'react-hook-form';
 import { IoImageOutline } from "react-icons/io5";
 
 const IMAGEBB_API_KEY = import.meta.env.VITE_IMAGEBB_API_KEY;
+const IMAGEBB_MY_API_KEY = '7368137052956468304b9e8bf25eac76';
 const MAX_FILE_SIZE = 1024 * 1024;
 const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png'];
 
@@ -30,7 +31,7 @@ export default function UploadImage() {
     formData.append('image', file);
 
     try {
-      const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMAGEBB_API_KEY}`, {
+      const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMAGEBB_API_KEY ? IMAGEBB_API_KEY : IMAGEBB_MY_API_KEY}`, {
         method: 'POST',
         body: formData,
       });
