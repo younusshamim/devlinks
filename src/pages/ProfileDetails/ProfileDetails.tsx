@@ -15,7 +15,6 @@ const ProfileDetails: React.FC = () => {
     });
 
     const onSave = async (data: ProfileDetailsType) => {
-        // updateProfileDetails(data);
         await saveData(data);
     };
 

@@ -46,6 +46,7 @@ export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({ child
   }
 
   const saveData = async (data: UserDetailsType) => {
+    setSaving(true);
     const payload = { id: userId as string, userData: { ...userDetails, ...data } };
     delete payload.userData._id;
     try {

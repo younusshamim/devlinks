@@ -4,6 +4,8 @@ import PageRoutes from '@/config/page-routes';
 import { showErrorToast, showSuccessToast } from '@/config/toast-options';
 import { useProfile } from '@/context/ProfileContext';
 import { useCreateUser } from '@/hooks/user-hooks';
+import { setUserToLocalStorage } from '@/lib/localStorage';
+import { handleLoginError } from '@/lib/utils';
 import { signupSchema, signupType } from '@/validators/signup.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
@@ -14,18 +16,14 @@ const Signup: React.FC = () => {
     const { updateUserDetails } = useProfile()
     const navigation = useNavigate();
     const createUser = useCreateUser();
-
-    const methods = useForm<signupType>({
-        resolver: zodResolver(signupSchema),
-    });
+    const methods = useForm<signupType>({ resolver: zodResolver(signupSchema) });
     const { register, formState: { errors } } = methods;
 
     const onSave = async (userData: signupType) => {
         try {
             const result = await createUser.mutateAsync(userData);
             if (result.success) {
-                localStorage.setItem('token', result.data!.token);
-                localStorage.setItem('userId', result.data!.user._id as string);
+                setUserToLocalStorage(result);
                 showSuccessToast('User created successfully');
                 updateUserDetails(result.data!.user);
                 navigation(PageRoutes.customizeLinks);
@@ -33,11 +31,7 @@ const Signup: React.FC = () => {
                 showErrorToast(result.message || 'User creation failed');
             }
         } catch (error) {
-            if (error instanceof Error) {
-                showErrorToast(`User creation error: ${error.message}`);
-            } else {
-                showErrorToast('An unknown error occurred');
-            }
+            handleLoginError(error);
         }
     };
 
@@ -46,6 +40,7 @@ const Signup: React.FC = () => {
             formType="signup"
             methods={methods}
             onSave={onSave}
+            loading={createUser.isPending}
             formFields={
                 <>
                     <Input

@@ -3,6 +3,7 @@
 import PageRoutes from "@/config/page-routes";
 import { useProfile } from "@/context/ProfileContext";
 import useMediaQuery from "@/hooks/use-media-query";
+import { clearLocalStorage } from "@/lib/localStorage";
 import { CgProfile } from "react-icons/cg";
 import { IoMdLogOut } from "react-icons/io";
 import { IoEyeOutline } from "react-icons/io5";
@@ -27,8 +28,7 @@ export default function DashboardHeader() {
   const userId = userDetails?._id
 
   const handleLogout = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('userId')
+    clearLocalStorage()
     navigate(PageRoutes.login)
   }
 
@@ -58,7 +58,7 @@ export default function DashboardHeader() {
           {smDevice ? 'Preview' : <IoEyeOutline />}
         </Button>
 
-        <Button onClick={handleLogout} variant="ghost" className="text-red-700 hover:bg-red-700/20 hover:text-red-700 text-xl" title="Logout">
+        <Button onClick={handleLogout} variant="ghost" className="text-red-700 hover:bg-red-700/20 hover:text-red-700 text-2xl" title="Logout">
           <IoMdLogOut />
         </Button>
       </div>

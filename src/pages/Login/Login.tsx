@@ -4,6 +4,8 @@ import PageRoutes from "@/config/page-routes";
 import { showErrorToast } from "@/config/toast-options";
 import { useProfile } from "@/context/ProfileContext";
 import { useLogin } from "@/hooks/user-hooks";
+import { setUserToLocalStorage } from "@/lib/localStorage";
+import { handleLoginError } from "@/lib/utils";
 import { loginSchema, loginType } from "@/validators/login.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -13,29 +15,21 @@ const Login = () => {
     const { updateUserDetails } = useProfile()
     const navigation = useNavigate();
     const login = useLogin();
-
-    const methods = useForm<loginType>({
-        resolver: zodResolver(loginSchema),
-    });
+    const methods = useForm<loginType>({ resolver: zodResolver(loginSchema) });
     const { register, formState: { errors } } = methods;
 
     const onLogin = async (data: loginType) => {
         try {
             const result = await login.mutateAsync(data);
             if (result.success) {
-                localStorage.setItem('token', result.data!.token);
-                localStorage.setItem('userId', result.data!.user._id as string);
+                setUserToLocalStorage(result);
                 updateUserDetails(result.data!.user);
                 navigation(PageRoutes.customizeLinks);
             } else {
                 showErrorToast(result.message || 'User login failed');
             }
         } catch (error) {
-            if (error instanceof Error) {
-                showErrorToast(`User login error: ${error.message}`);
-            } else {
-                showErrorToast('An unknown error occurred');
-            }
+            handleLoginError(error);
         }
     };
 
@@ -44,6 +38,7 @@ const Login = () => {
             formType="login"
             methods={methods}
             onSave={onLogin}
+            loading={login.isPending}
             formFields={
                 <>
                     <Input
