@@ -18,6 +18,9 @@ interface FormData {
 const CustomizeLinks = () => {
     const { customizeLinks, updateCustomizeLinks, } = useProfile();
 
+    console.log(customizeLinks);
+
+
     const platformsOptions = useMemo(() => PlatformsData.map(platform => ({
         label: platform.name, value: platform.name, Icon: platform.Icon,
     })), []);
@@ -32,9 +35,11 @@ const CustomizeLinks = () => {
         name: "platforms",
     });
 
+    const watchPlatforms = methods.watch("platforms");
+
     useEffect(() => {
-        updateCustomizeLinks(methods.getValues().platforms);
-    }, [methods.watch('platforms')]);
+        updateCustomizeLinks(watchPlatforms);
+    }, [watchPlatforms]);
 
     const onSave = async (data: FormData) => {
         const updatedData = {
