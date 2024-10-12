@@ -36,7 +36,7 @@ export default function DashboardHeader() {
     <Section className="flex items-center justify-between ">
       <Logo />
 
-      <div className="space-x-5">
+      <div className="space-x-3">
         {tabsButtons.map((button, index) => (
           <Button
             key={index}
@@ -50,7 +50,7 @@ export default function DashboardHeader() {
         ))}
       </div>
 
-      <div className="flex gap-2 items-center">
+      <div className="flex space-x-1 items-center">
         <Button
           onClick={() => navigate(`${PageRoutes.preview}/${userId}`)} variant='outline'
           className={smDevice ? '' : 'text-lg'}

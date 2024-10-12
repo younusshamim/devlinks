@@ -8,7 +8,7 @@ const DashboardLayout = () => {
     const { fetching, userDetails } = useProfile();
 
     return (
-        <div className="p-4 space-y-4">
+        <div className="sm:p-4 space-y-4">
             <DashboardHeader />
 
             <div className="flex md:space-x-4">

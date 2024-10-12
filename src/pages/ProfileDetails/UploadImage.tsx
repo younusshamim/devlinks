@@ -112,7 +112,7 @@ export default function UploadImage() {
           </label>
         </div>
 
-        <div className="md:w-[30%]">
+        <div className="md:w-[40%]">
           <p className="text-neutral-grey text-xs">
             Image must be below 1MB. Use PNG or JPG format.
           </p>
