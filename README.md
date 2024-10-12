@@ -16,10 +16,11 @@ This project is a link-sharing app that allows users to create, read, update, an
 ## How to Run the Project
 1. Clone the repository using `git clone https://github.com/your-username/link-sharing-app.git`
 2. Install the dependencies using `npm install`
-3. Create a new file called `.env` and add the following line: `VITE_IMAGEBB_API_KEY=your-api-key`
-4. Replace `your-api-key` with your actual ImageBB API key
-5. Start the development server using `npm run dev`
-6. Open your web browser and navigate to `http://localhost:3000`
+3. (Optional) To enable image uploads via ImageBB, create a new file called `.env` and add the following line: `VITE_IMAGEBB_API_KEY=your-api-key`
+   - Replace `your-api-key` with your actual ImageBB API key
+   - **Note:** If you skip this step, the app will use a default fallback API key for image uploads.
+4. Start the development server using `npm run dev`
+5. Open your web browser and navigate to `http://localhost:3000`
 
 ## How to Build the Project
 1. Run `npm run build` to build the project
