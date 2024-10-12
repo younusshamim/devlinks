@@ -6,7 +6,7 @@ import { customizeLinksArraySchema, PlatformType } from "@/validators/customize-
 import { closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import AddNewLink from "./AddNewLink";
 import CustomizeFormFields from "./CustomizeFormFields";
@@ -16,7 +16,7 @@ interface FormData {
 }
 
 const CustomizeLinks = () => {
-    const { userDetails, updateCustomizeLinks, saveData } = useProfile();
+    const { userDetails, saveData } = useProfile();
     const platformsLinks = userDetails?.platforms;
 
     const platformsOptions = useMemo(() => PlatformsData.map(platform => ({
@@ -33,12 +33,6 @@ const CustomizeLinks = () => {
         name: "platforms",
     });
 
-    const watchPlatforms = methods.watch("platforms");
-
-    useEffect(() => {
-        updateCustomizeLinks(watchPlatforms);
-    }, [watchPlatforms]);
-
     const onSave = async (data: FormData) => {
         const updatedData = {
             platforms: data.platforms.map((platform, index) => ({
@@ -46,7 +40,6 @@ const CustomizeLinks = () => {
                 displayOrder: index + 1,
             })),
         };
-        updateCustomizeLinks(updatedData.platforms);
         await saveData(updatedData);
     };
 

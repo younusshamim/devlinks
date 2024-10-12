@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import ProfileFormFields from "./ProfileFormFields";
 
 const ProfileDetails: React.FC = () => {
-    const { userDetails, updateProfileDetails, saveData } = useProfile();
+    const { userDetails, saveData } = useProfile();
 
     const methods = useForm<ProfileDetailsType>({
         resolver: zodResolver(profileDetailsSchema),
@@ -15,7 +15,7 @@ const ProfileDetails: React.FC = () => {
     });
 
     const onSave = async (data: ProfileDetailsType) => {
-        updateProfileDetails(data);
+        // updateProfileDetails(data);
         await saveData(data);
     };
 

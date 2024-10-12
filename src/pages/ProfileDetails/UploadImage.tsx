@@ -1,8 +1,7 @@
 import Section from "@/components/Section";
-import { showErrorToast, showSuccessToast } from "@/config/toast-options";
+import { showErrorToast } from "@/config/toast-options";
 import React, { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import toast from 'react-hot-toast';
 import { IoImageOutline } from "react-icons/io5";
 
 const IMAGEBB_API_KEY = import.meta.env.VITE_IMAGEBB_API_KEY;
@@ -16,15 +15,13 @@ export default function UploadImage() {
 
   const validateImage = (file: File): boolean => {
     if (!ALLOWED_FILE_TYPES.includes(file.type)) {
-      toast.error('Please upload a PNG or JPG image.');
+      showErrorToast('Please upload a PNG or JPG image.');
       return false;
     }
-
     if (file.size > MAX_FILE_SIZE) {
-      toast.error('Image size must be below 1MB.');
+      showErrorToast('Image size must be below 1MB.');
       return false;
     }
-
     return true;
   };
 
@@ -43,7 +40,8 @@ export default function UploadImage() {
       const data = await response.json();
       return data.data.url;
     } catch (error) {
-      console.error('Error uploading image:', error);
+      console.log(error);
+      showErrorToast('Error uploading image:',);
       return null;
     }
   };
@@ -60,7 +58,6 @@ export default function UploadImage() {
 
     if (uploadedImageUrl) {
       setValue('picture', uploadedImageUrl);
-      showSuccessToast('Image uploaded successfully!');
     } else {
       showErrorToast('Failed to upload image. Please try again.');
     }

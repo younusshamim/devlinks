@@ -2,6 +2,7 @@ import SignupLoginForm from "@/components/Forms/SignupLoginForm/SignupLoginForm"
 import { Input } from "@/components/ui/input";
 import PageRoutes from "@/config/page-routes";
 import { showErrorToast } from "@/config/toast-options";
+import { useProfile } from "@/context/ProfileContext";
 import { useLogin } from "@/hooks/user-hooks";
 import { loginSchema, loginType } from "@/validators/login.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+    const { updateUserDetails } = useProfile()
     const navigation = useNavigate();
     const login = useLogin();
 
@@ -24,6 +26,7 @@ const Login = () => {
                 localStorage.setItem('token', result.data!.token);
                 localStorage.setItem('userId', result.data!.user._id as string);
                 navigation(PageRoutes.customizeLinks);
+                updateUserDetails(result.data!.user);
             } else {
                 showErrorToast(result.message || 'User login failed');
             }

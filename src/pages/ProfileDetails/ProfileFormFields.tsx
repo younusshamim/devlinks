@@ -1,6 +1,7 @@
 import Section from "@/components/Section";
 import { Input } from "@/components/ui/input";
 import { screens } from "@/config/theme";
+import { useProfile } from "@/context/ProfileContext";
 import useMediaQuery from "@/hooks/use-media-query";
 import { ProfileDetailsType } from "@/validators/profile-details.schema";
 import { UseFormReturn } from "react-hook-form";
@@ -12,7 +13,7 @@ interface ProfileFormFieldsProps {
 
 const ProfileFormFields = ({ methods }: ProfileFormFieldsProps) => {
     const smDevice = useMediaQuery(`(min-width: ${screens.sm})`);
-
+    const { userDetails } = useProfile();
     const { register, formState: { errors } } = methods;
 
     return (
@@ -35,10 +36,9 @@ const ProfileFormFields = ({ methods }: ProfileFormFieldsProps) => {
                     layout={smDevice ? "row" : "column"}
                 />
                 <Input
-                    {...register("email")}
+                    disabled
+                    value={userDetails?.email || ""}
                     label="Email"
-                    placeholder="Write your email"
-                    error={errors.email?.message}
                     layout={smDevice ? "row" : "column"}
                 />
             </Section>

@@ -1,18 +1,14 @@
 /* eslint-disable react-refresh/only-export-components */
 import { showErrorToast, showSuccessToast } from '@/config/toast-options';
 import { useGetUser, useUpdateUser } from '@/hooks/user-hooks';
-import { StandardResponse } from '@/types/response';
 import { UserDetailsType } from '@/types/user-details.type';
-import { PlatformType } from '@/validators/customize-link.schema';
-import { ProfileDetailsType } from '@/validators/profile-details.schema';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 interface ProfileContextType {
   userDetails: UserDetailsType;
-  loading: boolean;
+  fetching: boolean;
   saving: boolean;
-  updateProfileDetails: (data: Partial<ProfileDetailsType>) => void;
-  updateCustomizeLinks: (data: PlatformType[]) => void;
+  updateUserDetails: (data: Partial<UserDetailsType>) => void;
   saveData: (data: UserDetailsType) => Promise<void>;
 }
 
@@ -28,43 +24,34 @@ export const useProfile = () => {
 
 export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [saving, setSaving] = useState<boolean>(false);
-  const [userId, setUserId] = useState<string | null>(null); // Store userId in state
+  const [userId, setUserId] = useState<string | null>(null);
   const updateUser = useUpdateUser();
+  const [userDetails, setUserDetails] = useState<UserDetailsType>(null as unknown as UserDetailsType);
 
-  const [userDetails, setUserDetails] = useState<UserDetailsType>({
-    firstName: '',
-    lastName: '',
-    email: '',
-    picture: '',
-    platforms: [],
-  });
+  const { isLoading: fetching, data, refetch } = useGetUser(userId);
 
-  const { isLoading } = useGetUser(userId, {
-    onSuccess: (response: StandardResponse<UserDetailsType>) => {
-      if (response.data) {
-        setUserDetails(response.data);
-      }
-    },
-  });
+  useEffect(() => {
+    if (data && data.data) {
+      updateUserDetails(data.data);
+    }
+  }, [data]);
 
   useEffect(() => {
     const storedUserId = localStorage.getItem('userId');
     setUserId(storedUserId);
   }, []);
 
-  const updateProfileDetails = (data: Partial<ProfileDetailsType>) => {
+  const updateUserDetails = (data: UserDetailsType) => {
     setUserDetails(prev => ({ ...prev, ...data }));
-  };
-
-  const updateCustomizeLinks = (data: PlatformType[]) => {
-    setUserDetails(prev => ({ ...prev, platforms: data }));
-  };
+  }
 
   const saveData = async (data: UserDetailsType) => {
     const payload = { id: userId as string, userData: { ...userDetails, ...data } };
+    delete payload.userData._id;
     try {
       const result = await updateUser.mutateAsync(payload);
       if (result.success) {
+        refetch()
         showSuccessToast('User updated successfully');
       } else {
         showErrorToast(result.message || 'User login failed');
@@ -84,10 +71,9 @@ export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({ child
     <ProfileContext.Provider
       value={{
         userDetails,
-        loading: isLoading,
+        fetching,
         saving,
-        updateProfileDetails,
-        updateCustomizeLinks,
+        updateUserDetails,
         saveData,
       }}
     >

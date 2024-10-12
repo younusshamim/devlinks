@@ -1,12 +1,14 @@
 import PageLoader from "@/components/PageLoader";
 import PageRoutes from "@/config/page-routes";
 import { showErrorToast } from "@/config/toast-options";
+import { useProfile } from "@/context/ProfileContext";
 import { useCheckSession } from "@/hooks/user-hooks";
 import { ReactNode, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 
 const PrivateRoute = ({ children }: { children: ReactNode }) => {
     const { data, isLoading, error } = useCheckSession();
+    const { fetching } = useProfile()
     const isSession = data?.data?.isSession
 
     useEffect(() => {
@@ -19,7 +21,7 @@ const PrivateRoute = ({ children }: { children: ReactNode }) => {
         }
     }, [error]);
 
-    if (isLoading) {
+    if (isLoading || fetching) {
         return <PageLoader />;
     }
 
