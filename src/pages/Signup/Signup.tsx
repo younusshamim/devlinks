@@ -2,6 +2,7 @@ import SignupLoginForm from '@/components/Forms/SignupLoginForm/SignupLoginForm'
 import { Input } from '@/components/ui/input';
 import PageRoutes from '@/config/page-routes';
 import { showErrorToast, showSuccessToast } from '@/config/toast-options';
+import { useProfile } from '@/context/ProfileContext';
 import { useCreateUser } from '@/hooks/user-hooks';
 import { signupSchema, signupType } from '@/validators/signup.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -10,6 +11,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 const Signup: React.FC = () => {
+    const { updateUserDetails } = useProfile()
     const navigation = useNavigate();
     const createUser = useCreateUser();
 
@@ -18,8 +20,6 @@ const Signup: React.FC = () => {
     });
     const { register, formState: { errors } } = methods;
 
-
-
     const onSave = async (userData: signupType) => {
         try {
             const result = await createUser.mutateAsync(userData);
@@ -27,6 +27,7 @@ const Signup: React.FC = () => {
                 localStorage.setItem('token', result.data!.token);
                 localStorage.setItem('userId', result.data!.user._id as string);
                 showSuccessToast('User created successfully');
+                updateUserDetails(result.data!.user);
                 navigation(PageRoutes.customizeLinks);
             } else {
                 showErrorToast(result.message || 'User creation failed');

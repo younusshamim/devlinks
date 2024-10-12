@@ -25,8 +25,8 @@ const Login = () => {
             if (result.success) {
                 localStorage.setItem('token', result.data!.token);
                 localStorage.setItem('userId', result.data!.user._id as string);
-                navigation(PageRoutes.customizeLinks);
                 updateUserDetails(result.data!.user);
+                navigation(PageRoutes.customizeLinks);
             } else {
                 showErrorToast(result.message || 'User login failed');
             }

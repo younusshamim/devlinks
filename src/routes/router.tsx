@@ -18,7 +18,7 @@ const Router = createBrowserRouter([
     ],
   },
   {
-    path: PageRoutes.preview,
+    path: `${PageRoutes.preview}/:id`,
     element: <Preview />,
   },
   {

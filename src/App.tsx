@@ -5,7 +5,13 @@ import './App.css';
 import { ProfileProvider } from "./context/ProfileContext";
 import Router from './routes/router';
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+    },
+  },
+})
 
 function App() {
   return (
@@ -14,7 +20,6 @@ function App() {
         <ProfileProvider>
           <RouterProvider router={Router} />
         </ProfileProvider>
-
         <Toaster />
       </QueryClientProvider>
     </div>

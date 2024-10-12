@@ -1,8 +1,10 @@
 "use client";
 
 import PageRoutes from "@/config/page-routes";
+import { useProfile } from "@/context/ProfileContext";
 import useMediaQuery from "@/hooks/use-media-query";
 import { CgProfile } from "react-icons/cg";
+import { IoMdLogOut } from "react-icons/io";
 import { IoEyeOutline } from "react-icons/io5";
 import { RiLinksLine } from "react-icons/ri";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -21,6 +23,14 @@ export default function DashboardHeader() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const smDevice = useMediaQuery(`(min-width: ${screens.sm})`);
+  const { userDetails } = useProfile()
+  const userId = userDetails?._id
+
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('userId')
+    navigate(PageRoutes.login)
+  }
 
   return (
     <Section className="flex items-center justify-between ">
@@ -40,12 +50,18 @@ export default function DashboardHeader() {
         ))}
       </div>
 
-      <Button
-        onClick={() => navigate(PageRoutes.preview)} variant='outline'
-        className={smDevice ? '' : 'text-lg'}
-      >
-        {smDevice ? 'Preview' : <IoEyeOutline />}
-      </Button>
+      <div className="flex gap-2 items-center">
+        <Button
+          onClick={() => navigate(`${PageRoutes.preview}/${userId}`)} variant='outline'
+          className={smDevice ? '' : 'text-lg'}
+        >
+          {smDevice ? 'Preview' : <IoEyeOutline />}
+        </Button>
+
+        <Button onClick={handleLogout} variant="ghost" className="text-red-700 hover:bg-red-700/20 hover:text-red-700 text-xl" title="Logout">
+          <IoMdLogOut />
+        </Button>
+      </div>
     </Section >
   );
 }
