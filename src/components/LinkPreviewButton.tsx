@@ -1,12 +1,11 @@
 import { cn } from "@/lib/utils";
 import { PlatformDataType } from "@/types/platform.type";
 import { FaArrowRight } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 
 const LinkPreviewButton = ({ platform, link, className }: { platform: PlatformDataType, link: string, className: string }) => {
     return (
-        <Link to={link}>
+        <a href={link} target="_blank" rel="noopener noreferrer">
             <Button
                 className={cn(`w-full active:opacity-90`, className)}
                 style={{ backgroundColor: platform.background, color: platform.foreground }}
@@ -15,7 +14,7 @@ const LinkPreviewButton = ({ platform, link, className }: { platform: PlatformDa
             >
                 {platform.name}
             </Button>
-        </Link>
+        </a>
     );
 };
 
