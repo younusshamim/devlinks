@@ -30,7 +30,7 @@ const SignupLoginForm = <T extends FieldValues>({
         <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(onSave)}>
                 <div className="flex justify-center items-center min-h-screen w-screen">
-                    <Section className='w-full sm:w-[400px] sm:m-10 p-10 space-y-4 flex flex-col items-center'>
+                    <Section className='w-full min-h-screen sm:min-h-fit sm:w-[400px] sm:m-10 p-10 space-y-4 flex flex-col items-center justify-center'>
                         <Logo logoText={true} className="scale-125 mb-3" />
 
                         {formFields}

@@ -43,7 +43,7 @@ export default function DashboardHeader() {
             onClick={() => navigate(button.link)}
             variant={pathname === button.link ? "secondary" : 'ghost'}
             iconBefore={smDevice ? button.icon : undefined}
-            className={smDevice ? '' : 'text-lg'}
+            className={smDevice ? '' : 'text-2xl'}
           >
             {smDevice ? button.title : button.icon}
           </Button>
@@ -53,7 +53,7 @@ export default function DashboardHeader() {
       <div className="flex space-x-1 items-center">
         <Button
           onClick={() => navigate(`${PageRoutes.preview}/${userId}`)} variant='outline'
-          className={smDevice ? '' : 'text-lg'}
+          className={smDevice ? '' : 'text-xl'}
         >
           {smDevice ? 'Preview' : <IoEyeOutline />}
         </Button>
