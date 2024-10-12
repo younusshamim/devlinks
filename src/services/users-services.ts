@@ -18,7 +18,7 @@ export const userServices = {
     ),
 
   updateUser: (id: string, userData: Partial<UserDetailsType>) =>
-    api.patch<StandardResponse<{ modifiedCount: number }>>(
+    api.put<StandardResponse<{ modifiedCount: number }>>(
       `/users/edit/${id}`,
       userData
     ),

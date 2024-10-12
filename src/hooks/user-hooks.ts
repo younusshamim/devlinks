@@ -59,7 +59,7 @@ export const useUpdateUser = () => {
 };
 
 export const useGetUser = (id?: string | null, options?: GetUserOptions) => {
-  const query = useQuery<
+  return useQuery<
     StandardResponse<UserDetailsType>,
     AxiosError,
     StandardResponse<UserDetailsType>,
@@ -70,15 +70,14 @@ export const useGetUser = (id?: string | null, options?: GetUserOptions) => {
       const res = await userServices.getUser(id!);
       return res.data;
     },
-    ...options,
+    onSuccess: (data: StandardResponse<UserDetailsType>) => {
+      if (options?.onSuccess) {
+        options.onSuccess(data);
+      }
+    },
     enabled: !!id && options?.enabled !== false,
+    ...options,
   });
-
-  if (query.isSuccess && options?.onSuccess) {
-    options.onSuccess(query.data);
-  }
-
-  return query;
 };
 
 export const useCheckSession = (
