@@ -7,16 +7,16 @@ import { useForm } from "react-hook-form";
 import ProfileFormFields from "./ProfileFormFields";
 
 const ProfileDetails: React.FC = () => {
-    const { profileDetails, updateProfileDetails, } = useProfile();
+    const { userDetails, updateProfileDetails, saveData } = useProfile();
 
     const methods = useForm<ProfileDetailsType>({
         resolver: zodResolver(profileDetailsSchema),
-        defaultValues: profileDetails,
+        defaultValues: userDetails,
     });
 
     const onSave = async (data: ProfileDetailsType) => {
         updateProfileDetails(data);
-        // await saveData();
+        await saveData(data);
     };
 
     return (

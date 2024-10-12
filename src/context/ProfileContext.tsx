@@ -1,16 +1,19 @@
 /* eslint-disable react-refresh/only-export-components */
+import { showErrorToast, showSuccessToast } from '@/config/toast-options';
+import { useGetUser, useUpdateUser } from '@/hooks/user-hooks';
+import { StandardResponse } from '@/types/response';
+import { UserDetailsType } from '@/types/user-details.type';
 import { PlatformType } from '@/validators/customize-link.schema';
 import { ProfileDetailsType } from '@/validators/profile-details.schema';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 interface ProfileContextType {
-  profileDetails: ProfileDetailsType;
-  customizeLinks: PlatformType[];
+  userDetails: UserDetailsType;
   loading: boolean;
   saving: boolean;
   updateProfileDetails: (data: Partial<ProfileDetailsType>) => void;
   updateCustomizeLinks: (data: PlatformType[]) => void;
-  saveData: () => Promise<void>;
+  saveData: (data: UserDetailsType) => Promise<void>;
 }
 
 const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
@@ -24,58 +27,54 @@ export const useProfile = () => {
 };
 
 export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [profileDetails, setProfileDetails] = useState<ProfileDetailsType>({
+  const [saving, setSaving] = useState<boolean>(false);
+  const [userId, setUserId] = useState<string | null>(null); // Store userId in state
+  const updateUser = useUpdateUser();
+
+  const [userDetails, setUserDetails] = useState<UserDetailsType>({
     firstName: '',
     lastName: '',
     email: '',
-    picture: ''
+    picture: '',
+    platforms: [],
   });
 
-  const [customizeLinks, setCustomizeLinks] = useState<PlatformType[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [saving, setSaving] = useState<boolean>(false);
-
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch('/api/user-data');
-      const data = await response.json();
-      setProfileDetails(data.profileDetails);
-      setCustomizeLinks(data.customizeLinks);
-    } catch (error) {
-      console.error('Error fetching user data:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { isLoading } = useGetUser(userId, {
+    onSuccess: (response: StandardResponse<UserDetailsType>) => {
+      if (response.data) {
+        setUserDetails(response.data);
+      }
+    },
+  });
 
   useEffect(() => {
-    fetchData();
+    const storedUserId = localStorage.getItem('userId');
+    setUserId(storedUserId);
   }, []);
 
   const updateProfileDetails = (data: Partial<ProfileDetailsType>) => {
-    setProfileDetails(prev => ({ ...prev, ...data }));
+    setUserDetails(prev => ({ ...prev, ...data }));
   };
 
   const updateCustomizeLinks = (data: PlatformType[]) => {
-    setCustomizeLinks(data);
+    setUserDetails(prev => ({ ...prev, platforms: data }));
   };
 
-  const saveData = async () => {
-    setSaving(true);
+  const saveData = async (data: UserDetailsType) => {
+    const payload = { id: userId as string, userData: { ...userDetails, ...data } };
     try {
-      const response = await fetch('/api/user-data', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ profileDetails, customizeLinks }),
-      });
-      if (!response.ok) {
-        throw new Error('Failed to save data');
+      const result = await updateUser.mutateAsync(payload);
+      if (result.success) {
+        showSuccessToast('User updated successfully');
+      } else {
+        showErrorToast(result.message || 'User login failed');
       }
     } catch (error) {
-      console.error('Error saving user data:', error);
+      if (error instanceof Error) {
+        showErrorToast(`Save data error: ${error.message}`);
+      } else {
+        showErrorToast('An unknown error occurred');
+      }
     } finally {
       setSaving(false);
     }
@@ -84,9 +83,8 @@ export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({ child
   return (
     <ProfileContext.Provider
       value={{
-        profileDetails,
-        customizeLinks,
-        loading,
+        userDetails,
+        loading: isLoading,
         saving,
         updateProfileDetails,
         updateCustomizeLinks,

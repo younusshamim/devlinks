@@ -16,10 +16,8 @@ interface FormData {
 }
 
 const CustomizeLinks = () => {
-    const { customizeLinks, updateCustomizeLinks, } = useProfile();
-
-    console.log(customizeLinks);
-
+    const { userDetails, updateCustomizeLinks, saveData } = useProfile();
+    const platformsLinks = userDetails?.platforms;
 
     const platformsOptions = useMemo(() => PlatformsData.map(platform => ({
         label: platform.name, value: platform.name, Icon: platform.Icon,
@@ -27,7 +25,7 @@ const CustomizeLinks = () => {
 
     const methods = useForm<FormData>({
         resolver: zodResolver(customizeLinksArraySchema),
-        defaultValues: { platforms: customizeLinks.length > 0 ? customizeLinks : [{ name: "", link: "", displayOrder: 1 }] },
+        defaultValues: { platforms: (platformsLinks && platformsLinks.length > 0) ? platformsLinks : [{ name: "", link: "", displayOrder: 1 }] },
     });
 
     const { fields, append, remove, move } = useFieldArray({
@@ -49,7 +47,7 @@ const CustomizeLinks = () => {
             })),
         };
         updateCustomizeLinks(updatedData.platforms);
-        // await saveData();
+        await saveData(updatedData);
     };
 
     const sensors = useSensors(

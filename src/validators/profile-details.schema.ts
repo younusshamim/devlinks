@@ -6,6 +6,7 @@ import {
 } from "./common-rules";
 
 export const profileDetailsSchema = z.object({
+  _id: stringOptional,
   firstName: requiredString,
   lastName: requiredString,
   email: validateOptionalEmail,

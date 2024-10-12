@@ -4,7 +4,7 @@ const PRIMARY_COLOR = "#633bfe";
 const ERROR_COLOR = "#cc0000";
 
 const baseToastOptions: ToastOptions = {
-  duration: 4000,
+  duration: 3000,
   position: "top-right",
   style: {
     padding: "16px",

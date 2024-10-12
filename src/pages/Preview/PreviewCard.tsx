@@ -6,7 +6,7 @@ import PlatformsData from "@/data/platforms.data";
 import { FaRegUser } from "react-icons/fa";
 
 const PreviewCard = () => {
-    const { customizeLinks, profileDetails } = useProfile();
+    const { userDetails, userDetails: profileDetails } = useProfile();
 
     return (
         <div className="flex justify-center sm:mt-20">
@@ -23,7 +23,7 @@ const PreviewCard = () => {
                 <p className="text-sm text-gray-500">{profileDetails.email}</p>
 
                 <div className="space-y-3 pt-5 w-full">
-                    {customizeLinks.map((platform, index) => {
+                    {userDetails.platforms?.map((platform, index) => {
                         const platformData = PlatformsData.find(
                             p => p.name.toLowerCase() === platform.name.toLowerCase()
                         );

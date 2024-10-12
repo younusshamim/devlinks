@@ -4,7 +4,7 @@ import LinkPreviewButton from "../LinkPreviewButton";
 import Skeleton from "../Skeleton";
 
 function PhoneMockup() {
-    const { profileDetails, customizeLinks, loading } = useProfile();
+    const { userDetails, loading } = useProfile();
 
     return (
         <div className="flex justify-center h-full">
@@ -12,32 +12,32 @@ function PhoneMockup() {
                 <img src={'/phone-mockup.png'} alt="Phone mockup" className="w-full" />
 
                 <div className="absolute top-20 flex flex-col items-center justify-center w-full gap-4">
-                    {loading || !profileDetails.picture ? (
+                    {loading || !userDetails.picture ? (
                         <Skeleton type="rounded" />
                     ) : (
                         <img
-                            src={profileDetails.picture}
+                            src={userDetails.picture}
                             alt="Profile"
                             className="rounded-full h-[90px] w-[90px] object-cover"
                         />
                     )}
 
-                    {loading || !profileDetails.firstName || !profileDetails.lastName ? (
+                    {loading || !userDetails.firstName || !userDetails.lastName ? (
                         <Skeleton type="title" className="w-36" />
                     ) : (
                         <h1 className="text-2xl font-bold">
-                            {profileDetails.firstName} {profileDetails.lastName}
+                            {userDetails.firstName} {userDetails.lastName}
                         </h1>
                     )}
 
-                    {loading || !profileDetails.email ? (
+                    {loading || !userDetails.email ? (
                         <Skeleton type="subtitle" className="w-24" />
                     ) : (
-                        <p className="text-sm text-gray-500">{profileDetails.email}</p>
+                        <p className="text-sm text-gray-500">{userDetails.email}</p>
                     )}
 
                     <div className="overflow-y-auto h-[290px] space-y-4 mt-4">
-                        {customizeLinks.map((platform, index) => {
+                        {userDetails?.platforms?.map((platform, index) => {
                             const platformData = PlatformsData.find(
                                 p => p.name.toLowerCase() === platform.name.toLowerCase()
                             );
