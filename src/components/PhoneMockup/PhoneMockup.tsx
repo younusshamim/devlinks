@@ -11,7 +11,7 @@ function PhoneMockup() {
             <div className="w-[300px] relative mt-10">
                 <img src={'/phone-mockup.png'} alt="Phone mockup" className="w-full" />
 
-                <div className="absolute top-20 flex flex-col items-center justify-center w-full gap-4">
+                <div className="absolute top-20 flex flex-col items-center justify-center w-full gap-3">
                     {fetching || !userDetails?.picture ? (
                         <Skeleton type="rounded" />
                     ) : (
